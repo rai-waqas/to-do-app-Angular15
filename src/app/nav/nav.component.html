@@ -5,8 +5,9 @@
     <div class="links">
       <a routerLink="/home">Home</a>
       <a routerLink="/tasks">Tasks</a>
-      <a routerLink="/login">Login</a>
-      <a routerLink="/signup">Sign Up</a>
+      <a *ngIf="!isAuthenticated()" routerLink="/login">Login</a>
+      <a *ngIf="!isAuthenticated()" routerLink="/signup">Sign Up</a>
+      <a *ngIf="isAuthenticated()" (click)="logout()">Logout</a>
     </div>
   </div>
 </div>

@@ -10,6 +10,8 @@ import { MaterialModule } from './materialModule/material.module';
 import { AppRoutingModule } from './router/router.module';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TaskItemComponent,
     NavComponent,
     HomeComponent,
+    SignupComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

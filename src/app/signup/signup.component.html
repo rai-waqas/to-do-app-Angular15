@@ -1,0 +1,43 @@
+<div class="signup-container">
+    <h2>Register Yourself</h2>
+    <form [formGroup]="signupForm" (ngSubmit)="onFormSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input id="username" 
+        formControlName="username" 
+        class="form-control" 
+        type="text" 
+        [ngClass]="{'bg-red':signupForm.get('username').touched && !signupForm.get('username').valid}">
+        <small *ngIf="signupForm.get('username').touched && !signupForm.get('username').valid">Username is required *</small>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" 
+        formControlName="email" 
+        class="form-control" 
+        type="email" [ngClass]="{'bg-red':signupForm.get('email').touched && !signupForm.get('email').valid}">
+        <small *ngIf="signupForm.get('email').touched && !signupForm.get('email').valid">Email is required *</small>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" 
+        formControlName="password" 
+        class="form-control" 
+        type="password" 
+        [ngClass]="{'bg-red':signupForm.get('email').touched && !signupForm.get('email').valid}">
+
+        <small *ngIf="signupForm.get('password').touched">
+          <ng-container *ngIf="signupForm.get('password').hasError('required')">
+            Password is required *
+          </ng-container>
+          <ng-container *ngIf="signupForm.get('password').value && signupForm.get('password').value.length < 6">
+            Password must be at least 6 characters *
+          </ng-container>
+        </small>        
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Sign Up</button>
+      <label class="already-acc">Already have an account?</label>
+      <button type="button" class="btn btn-secondary login" (click)="navigateToLogin()">Go to Login Page</button>
+    </form>
+  </div>
+  
