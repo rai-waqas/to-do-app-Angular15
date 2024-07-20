@@ -1,0 +1,80 @@
+<div class="task-item">
+    <div class="form-group">
+        
+      </div>
+    <h2>Create a New Task</h2>
+  
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">  
+      <!-- Task Name -->
+      <div class="form-group">
+        <label for="name">Task Name</label>
+        <input id="name" formControlName="name" class="form-control">
+      </div>
+  
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" class="form-control"></textarea>
+      </div>
+  
+      <!-- Date Picker and Priority Dropdown -->
+      <div class="form-group">
+        <label for="dueDate">Due Date</label>
+        <input id="dueDate" formControlName="dueDate" type="date" class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="priority">Priority</label>
+        <select id="priority" formControlName="priority" class="form-control">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+  
+      <!-- Tags -->
+      <div class="form-group">
+        <label for="tags">Tags</label>
+        <input id="tags" formControlName="tags" class="form-control">
+      </div>
+  
+      <!-- Add Task Button -->
+      <button type="submit" class="btn btn-primary">Add Task</button>
+    </form>
+  
+    <!-- Filter and View Buttons -->
+    <div class="filter-buttons">
+      <button class="btn btn-secondary" (click)="filterByTags()">Filter By Tags</button>
+      <button class="btn btn-secondary" (click)="showAll()">Show All</button>
+      <button class="btn btn-secondary" (click)="showCompleted()">Show Completed</button>
+      <button class="btn btn-secondary" (click)="filterByPriority()">Filter by Priority</button>
+    </div>
+  
+    <!-- Tasks Table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Task Name</th>
+          <th>Description</th>
+          <th>Due Date</th>
+          <th>Tags</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td><input type="checkbox" (change)="toggleCompleted(task)"> {{ task.name }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.dueDate | date }}</td>
+          <td>{{ task.tags }}</td>
+          <td>
+            <button class="btn btn-warning" (click)="editTask(task)">Edit</button>
+            <button class="btn btn-danger" (click)="deleteTask(task)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

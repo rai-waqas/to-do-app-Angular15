@@ -1,0 +1,24 @@
+.welcome{
+    text-align: center;
+    height: 500px;
+    font-size: 50px;
+    color: #000000;
+    background-color: rgb(108, 141, 247);
+}
+.w-user{
+    padding: 160px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+.slogan{
+    font-size: 23px;
+    font-family: 'Times New Roman', Times, serif;
+}
+.get-started{
+    font-size: 20px;
+    color: white;
+    background-color: #0e1e77;
+    padding: 10px;
+    margin-top: 30px;
+    border-radius: 15px;
+}
