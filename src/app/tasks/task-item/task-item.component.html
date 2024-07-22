@@ -79,6 +79,7 @@
           <th>Task Name</th>
           <th>Description</th>
           <th>Due Date</th>
+          <th>Priority</th>
           <th>Tags</th>
           <th>Actions</th>
         </tr>
@@ -90,6 +91,7 @@
           <td><input type="checkbox" (change)="toggleCompleted($event, task)" [checked]="task.completed"> {{ task.name }}</td>
           <td>{{ task.description }}</td>
           <td>{{ task.dueDate | date }}</td>
+          <td>{{ task.priority }}</td>
           <td>{{ task.tags }}</td>
           <td>
             <button class="btn btn-warning" (click)="editTask(i)">Edit</button>

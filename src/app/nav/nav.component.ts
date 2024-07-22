@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { map, Observable, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-nav',
@@ -9,8 +10,13 @@ import { AuthService } from '../services/auth.service';
 export class NavComponent {
 
   constructor(private authService: AuthService){}
-  isAuthenticated(){
-    return this.authService.isAuthenticated();
+  isAuthenticated(): Observable<boolean> {
+    const value = this.authService.isAuthenticated().pipe(
+      take(1),
+      map(isLoggedIn => !!isLoggedIn)
+    );
+    // console.log('isAuthenticated:', value);
+    return value;
   }
   logout() {
     this.authService.logout();
