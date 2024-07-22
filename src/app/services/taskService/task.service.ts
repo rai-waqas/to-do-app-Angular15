@@ -35,6 +35,7 @@ export class TaskService {
   }
 
   updateTask(taskId: number, task: any): Observable<any> {
+    console.log('Task To Update:', task);
     return this.http.put<any>(`${this.apiUrl}/${taskId}`, task, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });

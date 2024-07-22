@@ -9,12 +9,14 @@
       <div class="form-group">
         <label for="name">Task Name</label>
         <input id="name" formControlName="name" class="form-control">
+        <small *ngIf="taskForm.get('name').touched && !taskForm.get('name').valid">Task Name is required *</small>
       </div>
   
       <!-- Description -->
       <div class="form-group description-group">
         <label for="description">Description</label>
         <textarea id="description" formControlName="description" class="form-control"></textarea>
+        <small *ngIf="taskForm.get('description').touched && !taskForm.get('description').valid">Description is required *</small>
       </div>
   
       <!-- Date Picker and Priority Dropdown -->
@@ -22,6 +24,7 @@
         <div class="form-half-group">
           <label for="dueDate">Due Date</label>
           <input id="dueDate" formControlName="dueDate" type="date" class="form-control">
+          <small *ngIf="taskForm.get('dueDate').touched && !taskForm.get('dueDate').valid">Date is required *</small>
         </div>
   
         <div class="form-half-group">
@@ -38,13 +41,15 @@
       <div class="form-group tags-group">
         <label for="tags">Tags</label>
         <input id="tags" formControlName="tags" class="form-control" placeholder="Separated by Commas">
+        <small *ngIf="taskForm.get('tags').touched && !taskForm.get('tags').valid">Tags field is required *</small>
       </div>
   
       <!-- Add Task Button -->
-      <button type="submit" value="submit" class="btn btn-primary add-task" *ngIf="!isEditClicked">Add Task</button>
+      <button type="submit" value="submit" class="btn btn-primary add-task" *ngIf="!isEditClicked" [disabled]="!taskForm.valid">Add Task</button>
       <button type="button" class="btn btn-primary add-task" *ngIf="isEditClicked" (click)="updateTask()">Update Task</button>
     </form>
-  
+    
+    <!-- Filter Buttons -->
     <div class="filter-buttons">
       <section>
         <mat-button-toggle-group
@@ -54,22 +59,39 @@
         >
           <mat-button-toggle value="all">Show All</mat-button-toggle>
           <mat-button-toggle value="completed">Show Completed</mat-button-toggle>
-          <mat-button-toggle value="priority">Filter by Priority</mat-button-toggle>
         </mat-button-toggle-group>
       </section>
     </div>
 
-    <section>
-        <h4>Filter By Tags</h4>
+    <!-- Filter By Tags -->
+    <ng-container *ngIf="selectedPriority.length === 0" && selectedFilter != ''>
+      <section>
+          <h4>Filter By Tags</h4>
+          <mat-button-toggle-group
+            name="tags"
+            aria-label="tags"
+            (change)="onTagSelectionChange($event)"
+            multiple
+          >
+            <mat-button-toggle *ngFor="let tag of tags" [value]="tag">{{ tag }}</mat-button-toggle>
+          </mat-button-toggle-group>
+      </section>
+    </ng-container>
+
+    <!-- Filter By Priority -->
+    <ng-container *ngIf="selectedTags.length === 0 && selectedFilter != ''">
+      <section class="priority-filter">
+        <h4>Filter By Priority</h4>
         <mat-button-toggle-group
-          name="tags"
-          aria-label="tags"
-          (change)="onTagSelectionChange($event)"
+          name="priority"
+          aria-label="priority"
+          (change)="onPrioritySelectionChange($event)"
           multiple
         >
-        <mat-button-toggle *ngFor="let tag of tags" [value]="tag">{{ tag }}</mat-button-toggle>
+          <mat-button-toggle *ngFor="let p of priority" [value]="p">{{ p }}</mat-button-toggle>
         </mat-button-toggle-group>
       </section>
+    </ng-container>
   
     <!-- Tasks Table -->
     <table class="table">

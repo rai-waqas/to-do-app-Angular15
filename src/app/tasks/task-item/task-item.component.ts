@@ -20,7 +20,9 @@ export class TaskItemComponent implements OnInit {
   displayedTasks: any[] = [];
   selectedFilter = 'all';
   selectedTags: string[] = [];
+  selectedPriority: string[] = [];
   tags = ['hobby', 'holiday', 'work', 'fun', 'health', 'emergency', 'travel', 'shopping'];
+  priority = ['low', 'medium', 'high'];
 
   constructor(private taskService: TaskService, private authService: AuthService) {}
   ngOnInit(){
@@ -109,9 +111,6 @@ export class TaskItemComponent implements OnInit {
       case 'completed':
         this.showCompleted();
         break;
-      case 'priority':
-        this.filterByPriority();
-        break;
       default:
         break;
     }
@@ -196,6 +195,12 @@ export class TaskItemComponent implements OnInit {
     }
   }
 
+  onPrioritySelectionChange(event: MatButtonToggleChange) {
+    this.selectedPriority = event.value;
+    console.log('Selected Priority:', this.selectedPriority);
+    this.filterByPriority();
+  }
+
   showAll() {
     this.displayedTasks = this.tasks;
   }
@@ -205,6 +210,12 @@ export class TaskItemComponent implements OnInit {
   }
 
   filterByPriority() {
-    // Implement filter by priority functionality
+    if (this.selectedPriority.length === 0) {
+      this.displayedTasks = this.tasks;
+    } else {
+      this.displayedTasks = this.tasks.filter(task =>
+        this.selectedPriority.some(priority => task.priority.split(',').map(t => t.trim()).includes(priority))
+      );
+    }
   }
 }

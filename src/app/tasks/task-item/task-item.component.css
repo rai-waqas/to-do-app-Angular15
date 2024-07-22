@@ -66,6 +66,7 @@
 }
 
 .table {
+  margin-top: 10px;
   width: 100%;
   border-collapse: collapse;
 }
@@ -89,4 +90,12 @@
   background-color: red;
   border: none;
   color: white;
+}
+
+.priority-filter{
+  margin-top: 10px;
+}
+
+small{
+  color: red;
 }
