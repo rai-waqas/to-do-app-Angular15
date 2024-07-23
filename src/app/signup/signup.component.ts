@@ -27,12 +27,12 @@ export class SignupComponent implements OnInit {
       const { username, email, password } = this.signupForm.value;
       this.userService.registerUser(email, password, username).subscribe(
         response => {
-          alert('Registration Successful');
-          this.navigateToLogin();
-        },
-        error => {
-          console.error('Signup failed', error);
-          alert('Signup Failed');
+          if (response.error) {
+            alert(response.message);
+          } else {
+            alert('Registration Successful');
+            this.navigateToLogin();
+          }
         }
       );
     }

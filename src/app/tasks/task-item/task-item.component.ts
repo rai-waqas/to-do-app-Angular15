@@ -39,16 +39,16 @@ export class TaskItemComponent implements OnInit {
 
   loadTasks() {
     this.authService.getUserId().subscribe(userId => {
-      try{
       this.taskService.getTasksByUserId().subscribe(
         tasks => {
           this.tasks = tasks;
           console.log('Tasks:', tasks);
           this.displayedTasks = tasks;
         },
-        error => { }
+        error => { 
+          alert('Error loading tasks. Please try again later.');
+        }
       );
-    } catch (error) {}
     });
   }
 
@@ -142,7 +142,7 @@ export class TaskItemComponent implements OnInit {
         id: this.taskId,
         dueDate: new Date(formValues.dueDate).toISOString()
       };
-      console.log('Updated task:', updatedTask);
+      // console.log('Updated task:', updatedTask);
       this.taskService.updateTask(updatedTask.id, updatedTask).subscribe(
         (response) => {
           this.taskId = null;

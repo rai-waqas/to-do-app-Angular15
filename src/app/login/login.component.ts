@@ -28,8 +28,11 @@ export class LoginComponent implements OnInit {
             this.authService.login(email, password).subscribe(
                 response => {
                     console.log('Login successful', response);
+                    localStorage.setItem('access token', response.token);
+                    this.authService.setUser(response.user);
+                    console.log(this.authService.getUser());
                     this.authService.isLoggedIn.next(true);
-                    this.authService.setUserId(response.userId);
+                    this.authService.setUserId(response.user.id);
                     console.log('Is logged in?', this.authService.isLoggedIn.value);
                     this.router.navigate(['/tasks']);
                 },

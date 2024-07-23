@@ -3,13 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../environment/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
     public isLoggedIn = new BehaviorSubject<boolean>(false);
-    private apiUrl = 'https://localhost:7091/api/Task/login';
+    private loginUrl = environment.task.loginUrl;
+    private user = null;
     private userId = new BehaviorSubject<number | null>(this.loadUserIdFromStorage());
 
     constructor(private http: HttpClient, private router: Router) {
@@ -17,7 +19,7 @@ export class AuthService {
     }
 
     login(email: string, password: string): Observable<any> {
-        return this.http.post<any>(this.apiUrl, { email, password }).pipe(
+        return this.http.post<any>(this.loginUrl, { email, password }).pipe(
             catchError(error => {
                 console.error('Login error', error);
                 throw error;
@@ -29,7 +31,10 @@ export class AuthService {
         this.isLoggedIn.next(false);
         console.log('Is logged in?', this.isLoggedIn.value);
         this.userId.next(null);
+        this.setUser(null);
+        console.log('User:', this.getUser());
         this.removeUserIdFromStorage();
+        localStorage.removeItem('access token');
         this.router.navigate(['/login']);
     }
 
@@ -45,6 +50,13 @@ export class AuthService {
         this.userId.next(id);
         this.saveUserIdToStorage(id);
         console.log('User ID set:', id);
+    }
+    setUser(user: any): void {
+        this.user = user;
+    }
+
+    getUser(): any {
+        return this.user;
     }
 
     private checkLoginStatus() {
@@ -69,4 +81,9 @@ export class AuthService {
     private removeUserIdFromStorage() {
         localStorage.removeItem('userId');
     }
+
+    getAuthorizationToken(): string {
+        return localStorage.getItem('access token');
+    }
+
 }
